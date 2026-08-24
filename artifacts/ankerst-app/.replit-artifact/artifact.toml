@@ -1,0 +1,28 @@
+kind = "web"
+previewPath = "/"
+title = "Ankerst"
+description = "A desktop-first network workspace connecting industrial buyers with automation providers through private opportunities, editable proposal Studio, immutable revisions, and transparent human decisions."
+version = "1.0.0"
+id = "artifacts/ankerst-app"
+router = "path"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 25542
+
+[services.development]
+run = "pnpm --filter @workspace/ankerst-app run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/ankerst-app", "run", "build" ]
+serve = "static"
+publicDir = "artifacts/ankerst-app/dist/public"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "25542"
+BASE_PATH = "/"
